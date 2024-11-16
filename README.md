@@ -45,3 +45,34 @@ createJsonServer('db.json', 5000, {
   allowedHeaders: 'Content-Type, Authorization'
 })
 ```
+
+In ReactJS:
+
+```javascript
+import { useJsonServer } from 'json-server-setup'
+
+function MyComponent() {
+  const { isRunning, error, data, startServer, stopServer, baseUrl } =
+    useJsonServer({
+      dbFile: './data/db.json',
+      port: 3001,
+      autoStart: true
+    })
+
+  if (error) {
+    return <div>Error: {error.message}</div>
+  }
+
+  return (
+    <div>
+      <div>Server Status: {isRunning ? 'Running' : 'Stopped'}</div>
+      <div>Server URL: {baseUrl}</div>
+
+      <button onClick={startServer}>Start Server</button>
+      <button onClick={stopServer}>Stop Server</button>
+
+      {data && <pre>{JSON.stringify(data, null, 2)}</pre>}
+    </div>
+  )
+}
+```

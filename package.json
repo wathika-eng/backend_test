@@ -1,6 +1,6 @@
 {
   "name": "json-server-setup",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A simple setup for a lightweight JSON-based REST API using json-server.",
   "author": "wathika-eng",
   "engines": {
@@ -31,6 +31,7 @@
   },
   "files": [
     "index.js",
+    "react/",
     "README.md"
   ],
   "devDependencies": {
