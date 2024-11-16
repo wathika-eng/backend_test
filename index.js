@@ -1,9 +1,39 @@
 #!/usr/bin/env node
-
 const jsonServer = require('json-server');
 const cors = require('cors');
 const yargs = require('yargs/yargs');
 const { hideBin } = require('yargs/helpers');
+const { watch } = require('node:fs/promises');
+const path = require('path');
+
+/**
+ * Watches the database file for changes and triggers router reload
+ * @param {string} dbFile - Path to the JSON database file
+ * @param {import('json-server').Router} router - JSON Server router instance
+ */
+async function watchDatabase(dbFile, router) {
+	try {
+		const watcher = watch(path.dirname(dbFile), { recursive: false });
+		console.log(`👀 Watching for changes in ${dbFile}`);
+
+		for await (const event of watcher) {
+			if (event.filename === path.basename(dbFile)) {
+				console.log('🔄 Database changed, reloading...');
+				try {
+					// Clear require cache for the db file
+					delete require.cache[require.resolve(path.resolve(dbFile))];
+					// Reload the router's database
+					router.db.read();
+					console.log('✅ Database reloaded successfully');
+				} catch (err) {
+					console.error('Error reloading database:', err);
+				}
+			}
+		}
+	} catch (err) {
+		console.error('Error watching database file:', err);
+	}
+}
 
 /**
  * Creates and starts a JSON Server with user-provided configurations.
@@ -27,6 +57,9 @@ const createJsonServer = (
 	// Use JSON Server middlewares and router
 	server.use(middlewares);
 	server.use(router);
+
+	// Start watching the database file
+	watchDatabase(dbFile, router);
 
 	// Start the server
 	server.listen(port, () => {
