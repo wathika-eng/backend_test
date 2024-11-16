@@ -39,6 +39,7 @@ const createJsonServer = (
 
 // CLI Support
 if (require.main === module) {
+	// When running from the command line
 	const argv = yargs(hideBin(process.argv))
 		.scriptName('json-server-setup')
 		.usage('Usage: $0 <dbFile> <port> [options]')
@@ -98,6 +99,7 @@ if (require.main === module) {
 
 	// Start the server
 	createJsonServer(argv.dbFile, argv.port, corsOptions);
+} else {
+	// For use as a module in other Node.js apps or React development
+	module.exports = createJsonServer;
 }
-
-module.exports = createJsonServer;
