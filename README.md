@@ -2,48 +2,46 @@
 
 This file sets up a lightweight REST API using json-server. It reads data from a db.json file and serves it over HTTP. Perfect for prototyping, testing, or mocking APIs.
 
-## Installation
+# Usage:
 
-Dependencies:
-
-- [Node.js] v16 only (https://nodejs.org/en/) comes with npm installed
-
-- Node Version Manager (nvm) (https://github.com/nvm-sh/nvm) or Fast Node Manager (fnm) (https://github.com/Schniz/fnm)
-
-- [json-server] v0.16.3 (https://www.npmjs.com/package/json-server)
-
-To install json-server globally, run:
+On the terminal, run the following commands:
 
 ```bash
-npm install -g json-server
+npx json-server-setup db.json 5000
 ```
 
-# Setup
+With cors
 
 ```bash
-git clone --depth 1 && cd json-server-setup
+npx json-server-setup db.json 5000 --cors-origin "http://localhost:3000"
 ```
+
+Or install it globally:
 
 ```bash
-npm install
+npm install -g json-server-setup
 ```
 
-Run the server while watching for changes in the db.json file:
+Then run:
 
 ```bash
-npm run dev
+json-server-setup db.json 5000
 ```
 
-The server will be running on http://localhost:3000
+or with cors origin:
 
-## Usage
+```bash
+json-server-setup db.json 5000 --cors-origin "http://localhost:3000"
+```
 
-To deploy on render.com, create a new web service and use the following settings:
-![renderSettings](/images/image.png)
+As a library:
 
-`.npmrc` file is used to set engine-strict=true to ensure that the correct version of Node.js is used.
+```javascript
+const createJsonServer = require('json-server-setup')
 
-`.nvmrc` file is used to specify the version of Node.js to use, if you are using nvm or fnm.
-
-![npmIFails](/images/Screenshot%20From%202024-11-16%2010-07-02.png)
-![fnmUse](/images//Screenshot%20From%202024-11-16%2010-07-16.png)
+createJsonServer('db.json', 5000, {
+  origin: 'http://localhost:3000',
+  methods: 'GET, POST, PUT, DELETE',
+  allowedHeaders: 'Content-Type, Authorization'
+})
+```
