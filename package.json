@@ -1,21 +1,47 @@
 {
-  "name": "backend_test",
+  "name": "json-server-setup",
   "version": "1.0.0",
-  "description": "",
+  "description": "A simple setup for a lightweight JSON-based REST API using json-server.",
+  "author": "wathika-eng",
   "engines": {
-    "node": "16"
+    "node": ">=16.0.0"
   },
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon index.js",
+    "test": "jest"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "json",
+    "server",
+    "rest-api",
+    "mock-api",
+    "db.json",
+    "json-server"
+  ],
+  "license": "MIT",
   "dependencies": {
     "cors": "^2.8.5",
-    "json-serve": "^0.1.0",
     "json-server": "^0.17.1"
-  }
+  },
+  "bin": {
+    "json-server-setup": "./index.js"
+  },
+  "files": [
+    "index.js",
+    "README.md"
+  ],
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "nodemon": "^3.1.7"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wathika-eng/json-server-setup.git"
+  },
+  "bugs": {
+    "url": "https://github.com/wathika-eng/json-server-setup/issues"
+  },
+  "homepage": "https://github.com/wathika-eng/json-server-setup#readme"
 }
